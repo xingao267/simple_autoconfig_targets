@@ -11,6 +11,9 @@ load(
 # Simple docker_toolchain_autoconfig target.
 docker_toolchain_autoconfig(
     name = "autoconfig",
+    additional_repos = [
+        "deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8",
+    ],
     base = "@ubuntu16_04-clang//image",
     bazel_version = "0.14.1",
     env = {
@@ -24,6 +27,9 @@ docker_toolchain_autoconfig(
         "CC_TOOLCHAIN_NAME": "linux_gnu_x86",
         "CC": "clang",
     },
+    keys = [
+        "@bazel_gpg//file",
+    ],
     packages = [
         "bazel",
         "ca-certificates-java",
@@ -35,12 +41,6 @@ docker_toolchain_autoconfig(
         "unzip",
         "wget",
         "zip",
-    ],
-    additional_repos = [
-        "deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8"
-    ],
-    keys = [
-        "@bazel_gpg//file",
     ],
     tags = ["manual"],
 )
